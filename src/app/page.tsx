@@ -11,7 +11,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import AppSidebarClient from "./_AppSidebarClient";
+import AppSidebarClient from "../components/sidebar/_AppSidebarClient";
 import Link from "next/link";
 import { LogInIcon } from "lucide-react";
 import { Suspense } from "react";
