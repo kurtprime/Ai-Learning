@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🤖 AI Job Scout - Your Intelligent Career Copilot
 
-## Getting Started
+**Match smarter, apply faster, and land your dream job with AI-powered precision.**  
+AI Job Scout transforms your job search by automating matching, optimizing applications, and tracking opportunities.
 
-First, run the development server:
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Next.js Version](https://img.shields.io/badge/Next.js-15.4-blue)](https://nextjs.org/)
+[![AI Powered](https://img.shields.io/badge/Powered%20By-AI-10b981)](https://openai.com)
+
+## ✨ Key Features
+
+- **🧠 Smart Role Matching** - AI analyzes your skills against job requirements
+- **✍️ AI Application Generator** - Creates tailored resumes and cover letters
+- **📊 Opportunity Dashboard** - Track applications and interviews
+- **🔔 Real-time Job Alerts** - Get notified about matching positions
+- **📈 Market Insights** - Salary trends and demand analytics
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js v18+
+- PostgreSQL
+- OpenAI API key
+
+### Installation
 
 ```bash
+# Clone repository
+git clone https://github.com/yourusername/ai-job-scout.git
+
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env.local
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
