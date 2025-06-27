@@ -1,7 +1,7 @@
 type CashTag =
   | "users"
   | "organizations"
-  | "joblistings"
+  | "jobListings"
   | "userNotificationSettings"
   | "userResumes"
   | "jobListingApplications"
@@ -9,6 +9,10 @@ type CashTag =
 
 export function getGlobalTag(tag: CashTag) {
   return `global:${tag}` as const;
+}
+
+export function getOrganizationTag(tag: CashTag, id: string) {
+  return `organization:${id}-${tag}` as const;
 }
 
 export function getIdTag(tag: CashTag, id: string) {

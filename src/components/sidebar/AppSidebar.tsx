@@ -43,8 +43,7 @@ export default function AppSidebar({
             </SidebarFooter>
           </SignedIn>
         </Sidebar>
-
-        <main>{children}</main>
+        <main className="flex-1">{children}</main>
       </AppSidebarClient>
     </SidebarProvider>
   );
