@@ -66,16 +66,15 @@ export default function JoblistingBadges({
         </Badge>
       )}
 
-      {stateAbbreviation != null ||
-        (city != null && (
-          <Badge {...badgeProps}>
-            <MapPinIcon className="size-10" />{" "}
-            {formatJobListingLocation({
-              stateAbbreviation,
-              city,
-            })}
-          </Badge>
-        ))}
+      {(stateAbbreviation != null || city != null) && (
+        <Badge {...badgeProps}>
+          <MapPinIcon className="size-10" />{" "}
+          {formatJobListingLocation({
+            stateAbbreviation,
+            city,
+          })}
+        </Badge>
+      )}
 
       <Badge {...badgeProps}>
         <BuildingIcon />
