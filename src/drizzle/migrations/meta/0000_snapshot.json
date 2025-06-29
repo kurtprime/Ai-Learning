@@ -1,5 +1,5 @@
 {
-  "id": "019c2307-496a-4c86-87d3-f2dc6ffdda79",
+  "id": "2fe87614-64db-48e9-84e3-aaf2783fc820",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -150,8 +150,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "stateAbbrevition": {
-          "name": "stateAbbrevition",
+        "stateAbbreviation": {
+          "name": "stateAbbreviation",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
@@ -220,11 +220,11 @@
         }
       },
       "indexes": {
-        "job-listings_stateAbbrevition_index": {
-          "name": "job-listings_stateAbbrevition_index",
+        "job-listings_stateAbbreviation_index": {
+          "name": "job-listings_stateAbbreviation_index",
           "columns": [
             {
-              "expression": "stateAbbrevition",
+              "expression": "stateAbbreviation",
               "isExpression": false,
               "asc": true,
               "nulls": "last"

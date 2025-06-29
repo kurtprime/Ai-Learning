@@ -19,17 +19,23 @@ export async function insertJobListings(
   return newListing;
 }
 
-// export async function updateJobListings(
-//   id: string,
-//   jobListings: Partial<typeof JobListingTable.$inferInsert>
-// ) {
-//   await db
-//     .update(JobListingTable)
-//     .set(jobListings)
-//     .where(eq(JobListingTable.id, id));
+export async function updateJobListings(
+  id: string,
+  jobListings: Partial<typeof JobListingTable.$inferInsert>
+) {
+  const [updatedListing] = await db
+    .update(JobListingTable)
+    .set(jobListings)
+    .where(eq(JobListingTable.id, id))
+    .returning({
+      id: JobListingTable.id,
+      organizationId: JobListingTable.organizationId,
+    });
 
-//   revalidateJobListingsCache(id);
-// }
+  revalidateJobListingsCache(updatedListing);
+
+  return updatedListing;
+}
 
 // export async function deleteJobListings(id: string) {
 //   await db.delete(JobListingTable).where(eq(JobListingTable.id, id));

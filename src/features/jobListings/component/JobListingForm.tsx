@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import {
   experienceLevel,
+  JobListingTable,
   jobListingType,
   locationRequirements,
   wageIntervals,
@@ -37,13 +38,29 @@ import StateSelectItems from "./StateSelectItems";
 import { MarkDownEditor } from "@/components/markdown/MarkdownEditor";
 import { Button } from "@/components/ui/button";
 import LoadingSwap from "@/components/LoadingSwap";
-import { createJobListing } from "../actions/action";
+import { createJobListing, updateJoblisting } from "../actions/action";
 import { toast } from "sonner";
 
-export default function JobListingForm() {
+export default function JobListingForm({
+  jobListing,
+}: {
+  jobListing: Pick<
+    typeof JobListingTable.$inferSelect,
+    | "title"
+    | "description"
+    | "stateAbbreviation"
+    | "city"
+    | "wage"
+    | "wageInterval"
+    | "experienceLevel"
+    | "type"
+    | "locationRequirement"
+    | "id"
+  >;
+}) {
   const form = useForm({
     resolver: zodResolver(jobListingSchema),
-    defaultValues: {
+    defaultValues: jobListing ?? {
       title: "",
       description: "",
       stateAbbreviation: null,
@@ -59,7 +76,10 @@ export default function JobListingForm() {
   const NONE_SELECT_VALUE = "none";
 
   async function onSubmit(data: z.infer<typeof jobListingSchema>) {
-    const res = await createJobListing(data);
+    const action = jobListing
+      ? updateJoblisting.bind(null, jobListing.id)
+      : createJobListing;
+    const res = await action(data);
 
     if (res.error) {
       toast.error(res.message);

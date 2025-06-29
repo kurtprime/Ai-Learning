@@ -29,7 +29,7 @@ CREATE TABLE "job-listings" (
 	"description" text NOT NULL,
 	"wage" integer,
 	"wageInterval" "job_listing_wage_interval",
-	"stateAbbrevition" varchar,
+	"stateAbbreviation" varchar,
 	"city" varchar,
 	"isFeatured" boolean DEFAULT false NOT NULL,
 	"locationRequirement" "job_listing_location_requirement" NOT NULL,
@@ -86,4 +86,4 @@ ALTER TABLE "organization_user_settings" ADD CONSTRAINT "organization_user_setti
 ALTER TABLE "organization_user_settings" ADD CONSTRAINT "organization_user_settings_organizationId_organizations_id_fk" FOREIGN KEY ("organizationId") REFERENCES "public"."organizations"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_resumes" ADD CONSTRAINT "user_resumes_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_notification_settings" ADD CONSTRAINT "user_notification_settings_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-CREATE INDEX "job-listings_stateAbbrevition_index" ON "job-listings" USING btree ("stateAbbrevition");
+CREATE INDEX "job-listings_stateAbbreviation_index" ON "job-listings" USING btree ("stateAbbreviation");
