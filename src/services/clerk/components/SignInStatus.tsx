@@ -1,9 +1,7 @@
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import {
   SignedOut as ClerkSignedOut,
   SignedIn as ClerkSignedIn,
 } from "@clerk/nextjs";
-import { Link, LogInIcon } from "lucide-react";
 import React, { ReactNode, Suspense } from "react";
 
 export function SignedOut({ children }: { children: ReactNode }) {

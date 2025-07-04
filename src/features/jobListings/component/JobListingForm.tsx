@@ -44,7 +44,7 @@ import { toast } from "sonner";
 export default function JobListingForm({
   jobListing,
 }: {
-  jobListing: Pick<
+  jobListing?: Pick<
     typeof JobListingTable.$inferSelect,
     | "title"
     | "description"
@@ -175,48 +175,37 @@ export default function JobListingForm({
                 </FormItem>
               )}
             />
+
             <FormField
-              name="wage"
+              name="stateAbbreviation"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormField
-                    name="stateAbbreviation"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>State</FormLabel>
-                        <Select
-                          value={field.value ?? ""}
-                          onValueChange={(val) =>
-                            field.onChange(
-                              val === NONE_SELECT_VALUE ? null : val
-                            )
-                          }
+                  <FormLabel>State</FormLabel>
+                  <Select
+                    value={field.value ?? ""}
+                    onValueChange={(val) =>
+                      field.onChange(val === NONE_SELECT_VALUE ? null : val)
+                    }
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {field.value != null && (
+                        <SelectItem
+                          value={NONE_SELECT_VALUE}
+                          className="text-muted-foreground"
                         >
-                          <FormControl>
-                            <SelectTrigger className="w-full">
-                              <SelectValue />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {field.value != null && (
-                              <SelectItem
-                                value={NONE_SELECT_VALUE}
-                                className="text-muted-foreground"
-                              >
-                                Clear
-                              </SelectItem>
-                            )}
+                          Clear
+                        </SelectItem>
+                      )}
 
-                            <StateSelectItems />
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
+                      <StateSelectItems />
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

@@ -26,7 +26,6 @@ import {
 import { getNextJobListingStatus } from "@/features/jobListings/lib/utils";
 import { getCurrentOrganization } from "@/services/clerk/lib/getCurrentAuth";
 import { hasOrgUserPermissions } from "@/services/clerk/lib/orgUserPermission";
-import { hasPlanFeature } from "@/services/clerk/lib/planFeatures";
 import { and, eq } from "drizzle-orm";
 import {
   EditIcon,

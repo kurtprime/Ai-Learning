@@ -1,4 +1,4 @@
-type CashTag =
+type CacheTag =
   | "users"
   | "organizations"
   | "jobListings"
@@ -7,14 +7,18 @@ type CashTag =
   | "jobListingApplications"
   | "organizationUserSettings";
 
-export function getGlobalTag(tag: CashTag) {
+export function getGlobalTag(tag: CacheTag) {
   return `global:${tag}` as const;
 }
 
-export function getOrganizationTag(tag: CashTag, id: string) {
+export function getJobListingTag(tag: CacheTag, jobListingId: string) {
+  return `jobListing:${jobListingId}-${tag}` as const;
+}
+
+export function getOrganizationTag(tag: CacheTag, id: string) {
   return `organization:${id}-${tag}` as const;
 }
 
-export function getIdTag(tag: CashTag, id: string) {
+export function getIdTag(tag: CacheTag, id: string) {
   return `id:${id}-${tag}` as const;
 }

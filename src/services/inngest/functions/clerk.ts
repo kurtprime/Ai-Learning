@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { NonRetriableError } from "inngest";
 import { inngest } from "../client";
 import { Webhook } from "svix";
@@ -28,8 +29,9 @@ export const clerkCreateUser = inngest.createFunction(
     await step.run("verify-webhook", async () => {
       try {
         verifyWebhook(event.data);
-      } catch (error) {
-        throw new NonRetriableError("Invalid Webhook");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        throw new NonRetriableError("Invalid Webhook", error);
       }
     });
 
@@ -126,12 +128,13 @@ export const clerkCreateOrganization = inngest.createFunction(
     await step.run("verify-webhook", async () => {
       try {
         verifyWebhook(event.data);
-      } catch (error) {
-        throw new NonRetriableError("Invalid Webhook");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        throw new NonRetriableError("Invalid Webhook", error);
       }
     });
 
-    const organizationId = await step.run("create-organization", async () => {
+    await step.run("create-organization", async () => {
       const organizationData = event.data.data;
 
       await insertOrganization({
