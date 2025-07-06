@@ -20,6 +20,23 @@ type Events = {
   "clerk/organization.created": ClerkWebhookData<OrganizationJSON>;
   "clerk/organization.updated": ClerkWebhookData<OrganizationJSON>;
   "clerk/organization.deleted": ClerkWebhookData<DeletedObjectJSON>;
+  "app/jobListingApplication.created": {
+    data: {
+      jobListingId: string;
+      userId: string;
+    };
+  };
+  "app/resume.uploaded": {
+    user: {
+      id: string;
+    };
+  };
+  "app/resume.process.failed": {
+    data: {
+      userId: string;
+      error: string;
+    };
+  };
 };
 
 export const inngest = new Inngest({

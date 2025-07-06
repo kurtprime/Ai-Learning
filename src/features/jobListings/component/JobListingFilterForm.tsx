@@ -37,6 +37,7 @@ import {
 import StateSelectItems from "./StateSelectItems";
 import { Button } from "@/components/ui/button";
 import LoadingSwap from "@/components/LoadingSwap";
+import { useSidebar } from "@/components/ui/sidebar";
 
 const ANY_VALUE = "any";
 
@@ -56,6 +57,7 @@ export default function JobListingFilterForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   const form = useForm({
     resolver: zodResolver(jobListingFilterSchema),
@@ -93,6 +95,7 @@ export default function JobListingFilterForm() {
     console.log(newParams);
 
     router.push(`${pathname}?${newParams.toString()}`);
+    setOpenMobile(false);
   }
 
   return (

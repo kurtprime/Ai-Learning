@@ -12,8 +12,8 @@ import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 export async function getCurrentUser({
   alldata = false,
 }: {
-  alldata: boolean;
-}) {
+  alldata?: boolean;
+} = {}) {
   const { userId } = await auth();
 
   return {

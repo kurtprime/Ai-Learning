@@ -16,7 +16,7 @@ import {
 } from "@/drizzle/schema";
 import { convertSearchParamsToString } from "@/lib/convertSearchParamsToString";
 import { cn } from "@/lib/utils";
-import { and, desc, eq, ilike, or, SQL, SQLWrapper } from "drizzle-orm";
+import { and, desc, eq, ilike, or, SQL } from "drizzle-orm";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { differenceInDays } from "date-fns";
@@ -26,6 +26,7 @@ import JoblistingBadges from "@/features/jobListings/component/JoblistingBadges"
 import { z } from "zod";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { getJobListingGlobalTag } from "@/features/jobListings/db/cache/jobListings";
+import { getOrganizationIdTag } from "@/features/organizations/db/cache/organizations";
 
 type Props = {
   searchParams: Promise<Record<string, string | string[]>>;
@@ -75,7 +76,7 @@ async function SuspendedComponent({ searchParams, params }: Props) {
         <Link
           className="block "
           key={jobListing.id}
-          href={`/job-listings/${jobListing.id}${convertSearchParamsToString(
+          href={`/job-listings/${jobListing.id}?${convertSearchParamsToString(
             search
           )}`}
         >
@@ -125,7 +126,7 @@ function JobListingItem({
       )}
     >
       <CardHeader>
-        <div className="flex gap-4 ">
+        <div className="flex gap-4 items-start">
           <Avatar className="size-14 max-sm:hidden">
             <AvatarImage
               src={organization.imageUrl ?? undefined}
@@ -187,7 +188,6 @@ async function getJobListings(
   cacheTag(getJobListingGlobalTag());
 
   const whereConditions: (SQL | undefined)[] = [];
-
   if (searchParams.title) {
     whereConditions.push(
       ilike(JobListingTable.title, `%${searchParams.title}%`)
@@ -230,19 +230,12 @@ async function getJobListings(
     );
   }
 
-  return db.query.JobListingTable.findMany({
-    where: or(
-      jobListingId
-        ? and(
-            eq(JobListingTable.status, "published"),
-            eq(JobListingTable.id, jobListingId)
-          )
-        : undefined,
-      and(...whereConditions)
-    ),
+  const data = await db.query.JobListingTable.findMany({
+    where: and(...whereConditions),
     with: {
       organization: {
         columns: {
+          id: true,
           name: true,
           imageUrl: true,
         },
@@ -250,4 +243,10 @@ async function getJobListings(
     },
     orderBy: [desc(JobListingTable.isFeatured), desc(JobListingTable.postedAt)],
   });
+
+  data.forEach((listing) => {
+    cacheTag(getOrganizationIdTag(listing.organization.id));
+  });
+
+  return data;
 }
