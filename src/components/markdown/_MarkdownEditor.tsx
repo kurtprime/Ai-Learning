@@ -20,9 +20,7 @@ import {
 } from "@mdxeditor/editor";
 import { cn } from "@/lib/utils";
 import useIsDarkMode from "@/hooks/useIsDarkMode";
-
-export const markDownClassName =
-  "max-w-none prose prose-neutral dark:pose-invert font-sans";
+import { markDownClassName } from "./MarkdownRenderer";
 
 export default function InternalMarkdownEditor({
   ref,
@@ -33,11 +31,7 @@ export default function InternalMarkdownEditor({
   return (
     <MDXEditor
       {...props}
-      className={cn(
-        markDownClassName,
-        isDarkMode && "dark-theme prose-invert",
-        className
-      )}
+      className={cn(markDownClassName, isDarkMode && "dark-theme", className)}
       suppressHtmlProcessing
       plugins={[
         headingsPlugin(),

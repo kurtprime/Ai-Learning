@@ -2,9 +2,9 @@ import { db } from "@/drizzle/database";
 import { inngest } from "../client";
 import { eq } from "drizzle-orm";
 import { UserResumeTable } from "@/drizzle/schema";
-import fetch from "node-fetch";
-import pdfParse from "pdf-parse";
+
 import { updateUserResume } from "@/features/users/db/userResumes";
+import { cleanResumeText, extractTextFromBuffer } from "./pdfText";
 
 export const createAiSummaryOfUploadedResume = inngest.createFunction(
   {
@@ -28,6 +28,9 @@ export const createAiSummaryOfUploadedResume = inngest.createFunction(
 
     if (userResume == null) return;
 
+    const aiSummaryText = await extractTextFromBuffer(userResume.resumeFileUrl);
+    //aiSummaryText = cleanResumeText(aiSummaryText);
+
     const result = await step.ai.infer("create-ai-summary", {
       model: step.ai.models.deepseek({
         model: "deepseek-reasoner",
@@ -45,30 +48,7 @@ export const createAiSummaryOfUploadedResume = inngest.createFunction(
           },
           {
             role: "user",
-            content: await step.run("process-resume", async () => {
-              try {
-                // 1. Fetch PDF
-                const response = await fetch(userResume.resumeFileUrl);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-                // 2. Get buffer
-                const arrayBuffer = await response.arrayBuffer();
-                const buffer = Buffer.from(arrayBuffer);
-
-                // 3. Parse PDF
-                const text = await extractTextFromPDF(buffer);
-
-                // 4. Clean and return
-                return cleanResumeText(text);
-              } catch (error: any) {
-                // Log error but continue
-                await step.sendEvent("resume-process-failed", {
-                  name: "app/resume.process.failed",
-                  data: { userId, error: error.message },
-                });
-                return "Resume processing failed";
-              }
-            }),
+            content: aiSummaryText,
           },
         ],
       },
@@ -85,23 +65,3 @@ export const createAiSummaryOfUploadedResume = inngest.createFunction(
     });
   }
 );
-
-const cleanResumeText = (text: string): string => {
-  return text
-    .replace(/\s+/g, " ")
-    .replace(/[^\x00-\x7F]/g, "")
-    .substring(0, 15000);
-};
-
-const extractTextFromPDF = async (buffer: Buffer): Promise<string> => {
-  try {
-    const data = await pdfParse(buffer);
-    return data.text;
-  } catch (error) {
-    throw new Error(
-      `PDF parsing failed: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`
-    );
-  }
-};

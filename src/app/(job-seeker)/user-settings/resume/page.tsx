@@ -21,7 +21,7 @@ import { MarkdownRenderer } from "@/components/markdown/MarkdownRenderer";
 
 export default function UserResumePage() {
   return (
-    <div className="max-w-3xl mx-auto py-8 space-y-6 px-4">
+    <div className="max-w-3xl mx-auto py-8 space-y-6 px-4 ">
       <h1 className="text-2xl font-bold">Upload Your Resume</h1>
       <Card>
         <CardContent>
@@ -74,7 +74,7 @@ async function AISummaryCard() {
         <CardDescription>AI-generated summary of the resume</CardDescription>
       </CardHeader>
       <CardContent>
-        <MarkdownRenderer source={userResume.aiSummary} />
+        <MarkdownRenderer className="prose" source={userResume.aiSummary} />
       </CardContent>
     </Card>
   );

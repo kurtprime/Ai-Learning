@@ -10,7 +10,7 @@ export default function useIsDarkMode() {
   useEffect(() => {
     const controller = new AbortController();
     window
-      .matchMedia("(prefers-color-schema: dark)")
+      .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", (e) => setIsDarkMode(e.matches), {
         signal: controller.signal,
       });
