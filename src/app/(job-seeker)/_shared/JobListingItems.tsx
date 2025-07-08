@@ -230,6 +230,8 @@ async function getJobListings(
     );
   }
 
+  whereConditions.push(eq(JobListingTable.status, "published"));
+
   const data = await db.query.JobListingTable.findMany({
     where: and(...whereConditions),
     with: {
