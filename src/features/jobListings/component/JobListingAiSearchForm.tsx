@@ -39,7 +39,7 @@ export default function JobListingAiSearchForm() {
 
     const params = new URLSearchParams();
     results.jobIds.forEach((id) => params.append("jobIds", id));
-    router.push(`/${params.toString()}`);
+    router.push(`/?${params.toString()}`);
   }
 
   return (

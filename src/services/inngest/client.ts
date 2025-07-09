@@ -1,6 +1,8 @@
+import { JoblistingApplicationTable, JobListingTable } from "@/drizzle/schema";
 import {
   DeletedObjectJSON,
   OrganizationJSON,
+  OrganizationMembershipJSON,
   UserJSON,
 } from "@clerk/nextjs/server";
 import { EventSchemas, Inngest } from "inngest";
@@ -20,6 +22,9 @@ type Events = {
   "clerk/organization.created": ClerkWebhookData<OrganizationJSON>;
   "clerk/organization.updated": ClerkWebhookData<OrganizationJSON>;
   "clerk/organization.deleted": ClerkWebhookData<DeletedObjectJSON>;
+  "clerk/organizationMembership.created": ClerkWebhookData<OrganizationMembershipJSON>;
+  "clerk/organizationMembership.deleted": ClerkWebhookData<OrganizationMembershipJSON>;
+
   "app/jobListingApplication.created": {
     data: {
       jobListingId: string;
@@ -35,6 +40,37 @@ type Events = {
     data: {
       userId: string;
       error: string;
+    };
+  };
+  "app/email.daily-user-job-listings": {
+    data: {
+      aiPrompt?: string;
+      jobListings: (Omit<
+        typeof JobListingTable.$inferSelect,
+        "createdAt" | "postedAt" | "updatedAt" | "status" | "organizationId"
+      > & { organizationName: string })[];
+    };
+    user: {
+      email: string;
+      name: string;
+    };
+  };
+  "app/email.daily-organization-user-applications": {
+    data: {
+      applications: (Pick<
+        typeof JoblistingApplicationTable.$inferSelect,
+        "rating"
+      > & {
+        userName: string;
+        organizationId: string;
+        organizationName: string;
+        jobListingId: string;
+        jobListingTitle: string;
+      })[];
+    };
+    user: {
+      email: string;
+      name: string;
     };
   };
 };
