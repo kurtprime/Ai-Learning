@@ -7,12 +7,12 @@ export default function UserSettingsSidebar() {
     <SideNavbarMenuGroup
       items={[
         {
-          href: "/users-settings/notification",
+          href: "/user-settings/notifications",
           icon: <BellIcon className="size-4" />,
           label: "Notifications",
         },
         {
-          href: "/users-settings/resume",
+          href: "/user-settings/resume",
           icon: <FileUser className="size-4" />,
           label: "Resume",
         },
