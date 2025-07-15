@@ -23,12 +23,7 @@ import { SideBarOrganizationButton } from "@/features/organizations/components/S
 import { getCurrentOrganization } from "@/services/clerk/lib/getCurrentAuth";
 import { hasOrgUserPermissions } from "@/services/clerk/lib/orgUserPermission";
 import { count, desc, eq } from "drizzle-orm";
-import {
-  ClipboardListIcon,
-  LogInIcon,
-  PlusCircleIcon,
-  PlusIcon,
-} from "lucide-react";
+import { ClipboardListIcon, LogInIcon, PlusIcon } from "lucide-react";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import Link from "next/link";
 import { redirect } from "next/navigation";

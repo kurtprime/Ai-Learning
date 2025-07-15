@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Loader2Icon } from "lucide-react";
 import React, { ReactNode } from "react";
 
 export default function LoadingSwap({

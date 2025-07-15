@@ -19,7 +19,7 @@ export const applicationStage = [
   "interviewed",
   "hired",
 ] as const;
-export type applicationStage = (typeof applicationStage)[number];
+export type ApplicationStage = (typeof applicationStage)[number];
 export const applicationStageEnum = pgEnum(
   "job_application_stage",
   applicationStage

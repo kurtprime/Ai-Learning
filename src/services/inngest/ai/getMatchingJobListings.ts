@@ -56,7 +56,7 @@ export async function getMatchingJobListings(
           .parse(listing)
       )
     )}`,
-    // @ts-ignore
+    // @ts-expect-error it works
     model: deepseek({
       model: "deepseek-reasoner",
       apiKey: process.env.DEEPSEEK_API,

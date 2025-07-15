@@ -9,8 +9,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { db } from "@/drizzle/database";
-import { JobListingStatus, JobListingTable } from "@/drizzle/schema";
+import {
+  JoblistingApplicationTable,
+  JobListingStatus,
+  JobListingTable,
+} from "@/drizzle/schema";
+import ApplicationTable, {
+  SkeletonApplications,
+} from "@/features/jobListingApplication/components/ApplicationTable";
+import { getJoblistingApplicationJobListingTag } from "@/features/jobListingApplication/db/cache/jobListingApplications";
 import {
   deleteJobListing,
   toggleJobListingFeatured,
@@ -24,6 +33,8 @@ import {
   hasReachedMaxPublishedJobListings,
 } from "@/features/jobListings/lib/planFeatureHelpers";
 import { getNextJobListingStatus } from "@/features/jobListings/lib/utils";
+import { getUserResumeIdTag } from "@/features/users/db/cache/userResume";
+import { getUserIdTag } from "@/features/users/db/cache/users";
 import { getCurrentOrganization } from "@/services/clerk/lib/getCurrentAuth";
 import { hasOrgUserPermissions } from "@/services/clerk/lib/orgUserPermission";
 import { and, eq } from "drizzle-orm";
@@ -113,6 +124,14 @@ async function SuspendedPage({ params }: Props) {
         }
         dialogTitle="description"
       />
+
+      <Separator />
+      <div className="space-y-6 ">
+        <h2 className="text-xl font-semibold">Applications</h2>
+        <Suspense fallback={<SkeletonApplications />}>
+          <Applications jobListingId={jobListingId} />
+        </Suspense>
+      </div>
     </div>
   );
 }
@@ -261,6 +280,62 @@ function featuredToggleButtonText(isFeatured: boolean) {
       Feature
     </>
   );
+}
+
+async function Applications({ jobListingId }: { jobListingId: string }) {
+  const applications = await getJobListingApplications(jobListingId);
+
+  return (
+    <ApplicationTable
+      applications={applications}
+      canUpdateRating={await hasOrgUserPermissions(
+        "org:job_listing_applications:change_rating"
+      )}
+      canUpdateStage={await hasOrgUserPermissions(
+        "org:job_listing_applications:change_stage"
+      )}
+    />
+  );
+}
+
+async function getJobListingApplications(jobListingId: string) {
+  "use cache";
+  cacheTag(getJoblistingApplicationJobListingTag(jobListingId));
+
+  const data = await db.query.JoblistingApplicationTable.findMany({
+    where: eq(JoblistingApplicationTable.jobListingId, jobListingId),
+    columns: {
+      coverLetter: true,
+      createdAt: true,
+      stage: true,
+      rating: true,
+      jobListingId: true,
+    },
+    with: {
+      user: {
+        columns: {
+          id: true,
+          name: true,
+          imageUrl: true,
+        },
+        with: {
+          resume: {
+            columns: {
+              resumeFileUrl: true,
+              aiSummary: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  data.forEach(({ user }) => {
+    cacheTag(getUserIdTag(user.id));
+    cacheTag(getUserResumeIdTag(user.id));
+  });
+
+  return data;
 }
 
 async function getJobListing(jobListingId: string, orgId: string) {

@@ -9,13 +9,8 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { User } from "@/features/users/components/_SidebarUserButtonClient";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { SignOutButton } from "@/services/clerk/components/AuthButtons";
 import { useClerk } from "@clerk/nextjs";
 import {
@@ -25,8 +20,6 @@ import {
   CreditCardIcon,
   LogOutIcon,
   LucideUserRoundCog,
-  Settings2Icon,
-  UserIcon,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";

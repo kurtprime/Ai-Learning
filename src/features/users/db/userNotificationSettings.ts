@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/database";
-import { UserNotificationSettingsTable, UserTable } from "@/drizzle/schema";
+import { UserNotificationSettingsTable } from "@/drizzle/schema";
 import { revalidateUserNotificationSettingsCache } from "./cache/userNotificationSettings";
 
 export async function insertUserNotificationSettings(

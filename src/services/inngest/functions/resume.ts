@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { UserResumeTable } from "@/drizzle/schema";
 
 import { updateUserResume } from "@/features/users/db/userResumes";
-import { cleanResumeText, extractTextFromBuffer } from "./pdfText";
+import { extractTextFromBuffer } from "./pdfText";
 
 export const createAiSummaryOfUploadedResume = inngest.createFunction(
   {

@@ -186,7 +186,6 @@ async function getJobListings(
 ) {
   "use cache";
   cacheTag(getJobListingGlobalTag());
-
   const whereConditions: (SQL | undefined)[] = [];
   if (searchParams.title) {
     whereConditions.push(

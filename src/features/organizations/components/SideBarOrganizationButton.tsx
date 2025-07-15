@@ -1,4 +1,3 @@
-import { auth } from "@clerk/nextjs/server";
 import { Suspense } from "react";
 import SidebarUserButtonClient from "./_SidebarOrganizationButtonClient";
 import {

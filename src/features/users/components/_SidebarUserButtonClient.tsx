@@ -9,12 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { SignOutButton } from "@/services/clerk/components/AuthButtons";
 import { useClerk } from "@clerk/nextjs";
 import {
