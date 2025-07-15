@@ -171,7 +171,7 @@ export async function deleteJobListing(id: string) {
     return error;
   }
 
-  await deleteJobListings(id, orgId);
+  await deleteJobListings(id);
 
   redirect("/employer");
 }

@@ -10,7 +10,7 @@ import {
   SidebarTrigger,
 } from "../ui/sidebar";
 import AppSidebarClient from "./_AppSidebarClient";
-import { SignedIn, SignedOut } from "@/services/clerk/components/SignInStatus";
+import { SignedIn } from "@/services/clerk/components/SignInStatus";
 
 export default function AppSidebar({
   content,

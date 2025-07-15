@@ -64,7 +64,7 @@ async function SuspendedComponent({ searchParams, params }: Props) {
 
   const search = success ? data : {};
 
-  const jobListings = await getJobListings(search, jobListingId);
+  const jobListings = await getJobListings(search);
   if (jobListings.length === 0)
     return (
       <div className="text-muted-foreground p-4 ">No Job Listing Found</div>
@@ -181,8 +181,7 @@ async function DaysSincePosting({ postedAt }: { postedAt: Date }) {
 }
 
 async function getJobListings(
-  searchParams: z.infer<typeof searchParamsSchema>,
-  jobListingId: string | undefined
+  searchParams: z.infer<typeof searchParamsSchema>
 ) {
   "use cache";
   cacheTag(getJobListingGlobalTag());

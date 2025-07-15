@@ -23,10 +23,9 @@ import useIsDarkMode from "@/hooks/useIsDarkMode";
 import { markDownClassName } from "./MarkdownRenderer";
 
 export default function InternalMarkdownEditor({
-  ref,
   className,
   ...props
-}: MDXEditorProps & { ref?: Ref<MDXEditorMethods> }) {
+}: MDXEditorProps) {
   const isDarkMode = useIsDarkMode();
   return (
     <MDXEditor

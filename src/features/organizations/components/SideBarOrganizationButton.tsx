@@ -5,7 +5,7 @@ import {
   getCurrentUser,
 } from "@/services/clerk/lib/getCurrentAuth";
 import { SignOutButton } from "@/services/clerk/components/AuthButtons";
-import { SidebarMenu, SidebarMenuButton } from "@/components/ui/sidebar";
+import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { LogOutIcon } from "lucide-react";
 import SidebarOrganizationButtonClient from "./_SidebarOrganizationButtonClient";
 
