@@ -72,7 +72,7 @@ async function SuspendedPage({ params }: Props) {
   if (!jobListing) return notFound();
 
   return (
-    <div className="space-y-6 max-w-6xl max-auto p-4 @container">
+    <div className="space-y-6 max-w-6xl mx-auto p-4 @container">
       <div className="flex items-center justify-between gap-4 @max-4xl:flex-col @max-4xl:items-start">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">
@@ -287,7 +287,23 @@ async function Applications({ jobListingId }: { jobListingId: string }) {
 
   return (
     <ApplicationTable
-      applications={applications}
+      applications={applications.map((a) => ({
+        ...a,
+        user: {
+          ...a.user,
+          resume: a.user.resume
+            ? {
+                ...a.user.resume,
+                aiSummary: a.user.resume.aiSummary ? (
+                  <MarkdownRenderer source={a.user.resume.aiSummary} />
+                ) : null,
+              }
+            : null,
+        },
+        coverLetter: a.coverLetter ? (
+          <MarkdownRenderer source={a.coverLetter} />
+        ) : null,
+      }))}
       canUpdateRating={await hasOrgUserPermissions(
         "org:job_listing_applications:change_rating"
       )}
