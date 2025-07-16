@@ -20,7 +20,7 @@ export default function NotificationsPage() {
 
 async function SuspendedComponent() {
   const { userId } = await getCurrentUser();
-  if (!userId) return notFound();
+  if (userId == null) return notFound();
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
