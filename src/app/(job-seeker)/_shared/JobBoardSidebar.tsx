@@ -4,7 +4,7 @@ import React from "react";
 
 export default function JobBoardSidebar() {
   return (
-    <SidebarGroup className="group-[state=collapsed]:hidden">
+    <SidebarGroup className="group-data-[state=collapsed]:hidden">
       <SidebarGroupContent className="px-1">
         <JobListingFilterForm />
       </SidebarGroupContent>
